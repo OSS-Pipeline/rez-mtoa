@@ -32,7 +32,14 @@ set(EXTRACT_DIR $ENV{REZ_TMP_PATH}/mtoa/${REZ_BUILD_PROJECT_VERSION})
 execute_process(
     COMMAND
     bash ${CMAKE_SOURCE_DIR}/install.sh ${EXTRACT_DIR} ${MTOA_URL}
+    RESULT_VARIABLE RETURN_CODE
 )
+
+# We check that the execute_process() macro terminated properly.
+# If not, we abort the process.
+if(RETURN_CODE EQUAL "1")
+    message(FATAL_ERROR "[CMAKE] Install script returned an error code. Aborting...")
+endif()
 
 # We use a bogus CMake "install" step in order to be able to properly finish
 # and get out of the CMake script.
