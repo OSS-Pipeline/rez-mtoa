@@ -20,17 +20,26 @@ echo -e "[INSTALL][ARGS] INSTALL PATH: ${INSTALL_PATH}"
 echo -e "[INSTALL][ARGS] MTOA URL: ${MTOA_URL}"
 echo -e "[INSTALL][ARGS] MTOA VERSION: ${MTOA_VERSION}"
 
-# We created the necessary directories.
-MTOA_EXTRACT_PATH=${EXTRACT_PATH}/MtoA
-mkdir -p ${MTOA_EXTRACT_PATH}
+# We check if the arguments variables we need are correctly set.
+# If not, we abort the process.
+if [[ -z ${EXTRACT_PATH} || -z ${INSTALL_PATH} || -z ${MTOA_URL} || -z ${MTOA_VERSION} ]]; then
+    echo -e "\n"
+    echo -e "[INSTALL][ARGS] One or more of the argument variables are empty. Aborting..."
+    echo -e "\n"
+
+    exit 1
+fi
 
 # We install MtoA.
 echo -e "\n"
 echo -e "[INSTALL] Installing MtoA-${MTOA_VERSION}..."
 echo -e "\n"
 
-# We extract the content of the .run file in a manner that it does not ask for explicit user input.
+# We created the necessary directories.
+MTOA_EXTRACT_PATH=${EXTRACT_PATH}/MtoA
+mkdir -p ${MTOA_EXTRACT_PATH}
 
+# We extract the content of the .run file in a manner that it does not ask for explicit user input.
 ${MTOA_URL} --noexec --target ${EXTRACT_PATH}
 unzip -o ${EXTRACT_PATH}/package.zip -d ${MTOA_EXTRACT_PATH}
 
