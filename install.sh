@@ -40,8 +40,12 @@ MTOA_EXTRACT_PATH=${EXTRACT_PATH}/MtoA
 mkdir -p ${MTOA_EXTRACT_PATH}
 
 # We extract the content of the .run file in a manner that it does not ask for explicit user input.
-${MTOA_URL} --noexec --target ${EXTRACT_PATH}
-unzip -o ${EXTRACT_PATH}/package.zip -d ${MTOA_EXTRACT_PATH}
+${MTOA_URL} \
+    --noexec \
+    --target ${EXTRACT_PATH}
+unzip \
+    -o ${EXTRACT_PATH}/package.zip \
+    -d ${MTOA_EXTRACT_PATH}
 
 # We setup the .mod file to point correctly to our package.
 sed "s|+ mtoa any.*|+ mtoa any ${INSTALL_PATH}|1" --in-place ${MTOA_EXTRACT_PATH}/mtoa.mod
